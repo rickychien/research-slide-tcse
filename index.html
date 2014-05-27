@@ -1,0 +1,490 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+
+    <title>Test coverage on Lazy Loading JavaScript</title>
+
+    <meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+    <meta name="author" content="Ricky Chien">
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="stylesheet" href="css/reveal.min.css">
+    <link rel="stylesheet" href="css/theme/moon.css" id="theme">
+
+    <!-- For syntax highlighting -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+    <script>
+      document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <div class="reveal">
+
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class="slides">
+        <section>
+          <h2 style="text-overflow: normal;">Test coverage on <br>Lazy Loading JavaScript</h2>
+          <p>
+            <small>Created by <a href="mailto:ricky060709@gmail.com">Ricky Chien</a></small>
+          </p>
+        </section>
+
+        <section>
+          <h2>Outline</h2>
+          <br>
+          <ol>
+            <li>Test coverage</li>
+            <li>Web application</li>
+            <li>Background</li>
+            <li>Test coverage with dynamic loading</li>
+            <li>Analysis</li>
+            <li>Method</li>
+            <li>Achievement</li>
+            <li>Conclusion</li>
+          </ol>
+        </section>
+
+        <section>
+          <section>
+            <h2>Test coverage</h2>
+          </section>
+
+          <section>
+            <h2>Why we need test coverage?</h2>
+            <div class="fragment">
+              <p>For better software quality, we need to write tests</p>
+              <img src="assets/unittests.png" alt="unit tests">
+              <small><p>A JavaScript unit tests example</p></small>
+            </div>
+          </section>
+
+          <section>
+            <p>Coverage tool can give us a statistics report after testing</p>
+            <img src="assets/coverage-report.png" alt="coverage report">
+            <small><p>Blanket.js - JavaScript test coverage tool</p></small>
+          </section>
+
+          <section>
+            <p>Even show source code coverage details</p>
+            <img src="assets/coverage-report-details.png" alt="coverage report details">
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h2>Web application</h2>
+          </section>
+
+          <section>
+            <h2>Web is changing</h2>
+            <ul>
+              <li class="fragment"><p>Nowadays, web is going to become more complicated</p></li>
+              <li class="fragment"><p>Client (Browser) can take more jobs than server</p></li>
+              <li class="fragment"><p>Like a desktop application but it is written by web technique</p></li>
+            </ul>
+            <div class="fragment">
+              <img src="assets/gmail.png" alt="gmail" style="width: 680px; height: 400px;">
+            </div>
+          </section>
+
+          <section>
+            <h2>To build a web application</h2>
+            <ul>
+              <li class="fragment"><p>It's different with traditional website</p></li>
+              <li class="fragment"><p>Developers intent to distribute JavaScript files to modules</p></li>
+              <li class="fragment"><p>Web page is composed by modules or third-party libraries</p></li>
+              <br>
+              <p class="fragment" style="color: #99CCFF;">Web application have to download source code from network</p>
+            </ul>
+            <div class="fragment">
+              <img src="assets/browser-network.png" alt="browser network">
+            </div>
+          </section>
+
+          <section>
+            <h2>New issues</h2>
+            <ul>
+              <li class="fragment"><p>Too much requests will slow network down</p></li>
+              <li class="fragment"><p>User don't use all website functionalities every times</p></li>
+              <li class="fragment"><p>Huge JS libraries may block website loading</p></li>
+            </ul>
+            <br><br>
+            <h3 class="fragment" style="color: #ff4629;">Solutions by dynamic loading</h3>
+          </section>
+
+          <section>
+            <h2>Dynamic loading</h2>
+            <ul>
+              <li><p>Also known as "Lazy loading"</p></li>
+              <li><p>Using javascript to load javascript in run-time</p></li>
+              <li><p>Add conditions to determine when will need to load javascript</p></li>
+            </ul>
+            <img src="assets/dynamic-loading.png" alt="dynamic loading">
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h2>Background</h2>
+          </section>
+
+          <section>
+            <h2>Browser test runner</h2>
+             <p>Provide a real browser environment to run tests</p>
+          </section>
+
+          <section>
+            <h2>Coverage mechanism</h2>
+            <p>Browser instrumentation / Server instrumentation</p>
+          </section>
+
+          <section>
+            <h2>Browser instrumentation</h2>
+            <img src="assets/code-coverage-mechanism1.png" alt="code coverage mechanism 1"></img>
+          </section>
+
+          <section>
+            <h2>Browser instrumentation</h2>
+            <img src="assets/mechanism1-client-server.png" alt=""></img>
+            <p>Code instrumenting on browser</p>
+          </section>
+
+          <section>
+            <h2>Browser instrumentation</h2>
+            <img class="fragment" src="assets/blanket.png"></img>
+            <ul>
+              <li class="fragment"><p>Pros:</p></li>
+              <ul>
+                <li class="fragment"><p>Quite friendly to novice developers</p></li>
+                <li class="fragment"><p>Pretty easy to integrate with various environments</p></li>
+              </ul>
+              <li class="fragment"><p>Cons:</p></li>
+              <ul>
+                <li class="fragment"><p>Not support to dynamic loading coverage</p></li>
+              </ul>
+            </ul>
+          </section>
+
+          <section>
+            <h2>Server instrumentation</h2>
+            <img src="assets/code-coverage-mechanism2.png" alt="code coverage mechanism 2"></img>
+            <p>Need to use customized coverage server</p>
+          </section>
+
+          <section>
+            <h2>Server instrumentation</h2>
+            <img src="assets/mechanism2-client-server.png" alt="browser test runner"></img>
+            <p>Code instrumenting on coverage server</p>
+          </section>
+
+          <section>
+            <h2>Server instrumentation</h2>
+            <img class="fragment" src="assets/jscover.png"></img>
+            <ul>
+              <li class="fragment"><p>Pros:</p></li>
+              <ul>
+                <li class="fragment"><p>The full coverage support including dynamic loading script</p></li>
+              </ul>
+              <li class="fragment"><p>Cons:</p></li>
+              <ul>
+                <li class="fragment"><p>Inconvenient to install and configure (ex: need Java)</p></li>
+                <li class="fragment"><p>Hard to integrate instrumentation server with other server</p></li>
+              </ul>
+            </ul>
+          </section>
+
+          <section>
+            <h2>Our goal is to improve<br>browser instrumentation</h2>
+            <img src="assets/blanket.png"></img>
+            <p>Make it possible to cover dynamic loading scripts</p>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h2>Test coverage with dynamic loading</h2>
+          </section>
+
+          <section>
+            <h2>Zero coverage</h2>
+            <div>
+              <p>Firefox OS email app should be covered 21 modules, but actually only one</p>
+              <img src="assets/ffos-email-wrong.png" alt="ffox email wrong">
+            </div>
+          </section>
+
+          <section>
+            <h2>Zero coverage</h2>
+            <div>
+              <p>Prevalent web dynamic loading scheme</p>
+              <img src="assets/lazyload-sample.png" alt="lazyload sample">
+              <a href="http://rickychien.github.io/lazyload-sample/old/">Lazyload-sample</a>
+            </div>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h2>Analysis</h2>
+            <p>Analyze web script loading approachs</p>
+          </section>
+
+          <section>
+            <h2>Script Loading - HTML Script</h2>
+            <br>
+            <pre><code data-trim contenteditable>
+&lt;script src=&quot;path/script.js&quot;&gt;&lt;/script&gt;
+            </code></pre>
+            <pre><code data-trim contenteditable>
+&lt;script src=&quot;path/script.js&quot; async&gt;&lt;/script&gt;
+            </code></pre>
+            <pre><code data-trim contenteditable>
+&lt;script src=&quot;path/script.js&quot; defer&gt;&lt;/script&gt;
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>Script Loading - XHR (Ajax)</h2>
+            <br>
+            <pre><code data-trim contenteditable>
+var xhr = new XMLHttpRequest();
+xhr.onload = function (responseScript) {
+  // Execute response script
+  eval(responseScript);
+};
+xhr.open('GET', 'URL');
+xhr.send();
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>Script Loading - Document.write</h2>
+            <br>
+            <pre><code data-trim contenteditable>
+document.write('<script src="path/script.js"></script>');
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>Script Loading - DOM modification API</h2>
+            <br>
+            <p>appendChild / insertBefore / replaceChild</p>
+            <pre><code data-trim contenteditable>
+var script = document.createElement("script");
+script.src = url;
+
+document.head.appendChild(script);
+parentNode.insertBefore(script, node);
+parentNode.replaceChild(script, oldNode);
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>Script Loading - Function Wrapping</h2>
+            <br>
+            <p>Famous module loader library such as RequireJS using syntax :</p>
+            <pre><code data-trim contenteditable>
+require(["path/script.js"], function() {
+  // This function is called after path/script.js has loaded.
+});
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>Summary</h2>
+            <img style="width: 70%; height: 70%" src="assets/script-loading-analysis.png" alt="script loading analysis"></img>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h2>Method</h2>
+          </section>
+
+          <section>
+            <h2>Solution</h2>
+            <br>
+            <ul>
+              <li class="fragment"><p>Most of dynamic loading approachs are through DOM modification API and XHR</p></li>
+              <li class="fragment"><p>Overwrite DOM modification API and XHR to detect dynamic loading</p></li>
+              <li class="fragment"><p>Tests are needed to ensure our method is stable</p></li>
+            </ul>
+          </section>
+
+          <section>
+            <h2>Browser instrumentation Review</h2>
+            <img src="assets/code-coverage-mechanism1.png" alt="code coverage mechanism 1"></img>
+          </section>
+
+          <section>
+            <h2>Solution</h2>
+            <img src="assets/solution-mechanism.png" alt="solution mechanism"></img>
+          </section>
+
+          <section>
+            <h2>API structure</h2>
+            <img src="assets/api-structure.png" alt="api structure"></img>
+          </section>
+
+          <section>
+            <h2>DOM modification API</h2>
+            <p>Overwrite native appendChild / insertBefore / replaceChild</p>
+            <br>
+            <pre><code data-trim contenteditable>
+var originalAppendChild = Element.prototype.appendChild;
+
+Element.prototype.appendChild = function(newElement) {
+    // Do our hack here
+    return originalAppendChild.apply(this, args); // invoke native method
+};
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>XHR API</h2>
+            <p>Overwrite native open method in XHR object</p>
+            <br>
+            <pre><code data-trim contenteditable>
+var originalXHROpen = XMLHttpRequest.prototype.open;
+
+XMLHttpRequest.prototype.open = function(method, url) {
+  // Do our hack here
+  return originalXHROpen.apply(this, args); // invoke native method
+};
+            </code></pre>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h2>Achievement</h2>
+          </section>
+
+          <section>
+            <h3>A simple dynamic loading website</h3>
+            <br>
+            <ul>
+              <li><a href="http://rickychien.github.io/lazyload-sample/old/">Without support lazyload</a></li>
+              <li><a href="http://rickychien.github.io/lazyload-sample/new/">With support lazyload</a></li>
+            </ul>
+          </section>
+
+          <section>
+            <h3>New feature has landed in Firefox OS</h3>
+            <img src="assets/ffos-email-correct.png" alt="ffos email correct">
+          </section>
+
+          <section>
+            <p>Doesn't break original behavior even works fine in such complicated system</p>
+          </section>
+
+          <section>
+          <h3>Supported browsers</h3>
+            <img src="assets/browser-support.png"></img>
+          </section>
+
+          <section>
+            <h3>New feature has been proposed to blanket</h3>
+          </section>
+        </section>
+
+        <section>
+          <h2>Conclusion</h2>
+          <ul>
+            <li class="fragment"><p>We demonstrated the zero coverage issue</p></li>
+            <li class="fragment"><p>Analyzed prevalent dynamic loading schemes</p></li>
+            <li class="fragment"><p>Proposed a solution to overwrite native Web APIs to addressing zero coverage issue</p></li>
+            <li class="fragment"><p>Experiment was successful so that can cover dynamic loading scripts</p></li>
+            <li class="fragment"><p>Solution is very stable and support most of modern browsers</p></li>
+            <li class="fragment"><p>New feature will land into Blanket.js</p></li>
+          </ul>
+        </section>
+
+        <section>
+          <h1>Q &amp; A</h1>
+        </section>
+
+      </div>
+
+    </div>
+    <span class="slidenumber"></span>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.min.js"></script>
+
+    <script>
+
+      // Full list of configuration options available here:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+        transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+        // Parallax scrolling
+        // parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+        // parallaxBackgroundSize: '2100px 900px',
+
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+          { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+          { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+          { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+        ]
+      });
+
+      function slidenumber(event) {
+        //var totalslides = document.querySelectorAll( '.reveal .slides section:not(.stack)' ).length;
+        var current_slide = 0;
+
+        var horizontal_slides = document.querySelectorAll( '.reveal .slides>section' );
+        for (var i = 0; i < event.indexh; i++) {
+          // get subslides
+          var subslides = horizontal_slides[i].querySelectorAll('section');
+
+          // if subslides.length is 0, add 1 for horizontal slide, else add subslides.length
+          current_slide += (subslides.length === 0) ? 1 : subslides.length;
+        }
+
+        current_slide += event.indexv + 1;
+        return current_slide.toString(); // + " / " + totalslides.toString();
+      }
+
+      Reveal.addEventListener('slidechanged', function(event) {
+        document.querySelector('.slidenumber').innerHTML = slidenumber(event);
+      });
+
+      Reveal.addEventListener('ready', function(event) {
+        var div = document.querySelector('.reveal.center'),
+            aside = document.createElement('aside');
+        aside.setAttribute('class', 'controls slidenumber');
+        aside.setAttribute('style', 'display: block; left: 10px; right: initial; bottom: -30px; text-align: center; color: rgb(47, 210, 233);');
+        aside.innerHTML = slidenumber(event);
+        div.appendChild(aside);
+      });
+
+    </script>
+
+  </body>
+</html>
