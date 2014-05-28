@@ -67,20 +67,10 @@
             <h2>Why we need test coverage?</h2>
             <div class="fragment">
               <p>For better software quality, we need to write tests</p>
-              <img src="assets/unittests.png" alt="unit tests">
-              <small><p>A JavaScript unit tests example</p></small>
+              <p>Coverage tool can give us a statistics report after testing</p>
+              <img src="assets/coverage-report.png" alt="coverage report">
+              <small><p>Blanket.js - JavaScript test coverage tool</p></small>
             </div>
-          </section>
-
-          <section>
-            <p>Coverage tool can give us a statistics report after testing</p>
-            <img src="assets/coverage-report.png" alt="coverage report">
-            <small><p>Blanket.js - JavaScript test coverage tool</p></small>
-          </section>
-
-          <section>
-            <p>Even show source code coverage details</p>
-            <img src="assets/coverage-report-details.png" alt="coverage report details">
           </section>
         </section>
 
@@ -92,7 +82,6 @@
           <section>
             <h2>Web is changing</h2>
             <ul>
-              <li class="fragment"><p>Nowadays, web is going to become more complicated</p></li>
               <li class="fragment"><p>Client (Browser) can take more jobs than server</p></li>
               <li class="fragment"><p>Like a desktop application but it is written by web technique</p></li>
             </ul>
@@ -226,15 +215,6 @@
               <img src="assets/ffos-email-wrong.png" alt="ffox email wrong">
             </div>
           </section>
-
-          <section>
-            <h2>Zero coverage</h2>
-            <div>
-              <p>Prevalent web dynamic loading scheme</p>
-              <img src="assets/lazyload-sample.png" alt="lazyload sample">
-              <a href="http://rickychien.github.io/lazyload-sample/old/">Lazyload-sample</a>
-            </div>
-          </section>
         </section>
 
         <section>
@@ -316,16 +296,6 @@ require(["path/script.js"], function() {
           </section>
 
           <section>
-            <h2>Solution</h2>
-            <br>
-            <ul>
-              <li class="fragment"><p>Most of dynamic loading approachs are through DOM modification API and XHR</p></li>
-              <li class="fragment"><p>Overwrite DOM modification API and XHR to detect dynamic loading</p></li>
-              <li class="fragment"><p>Tests are needed to ensure our method is stable</p></li>
-            </ul>
-          </section>
-
-          <section>
             <h2>Browser instrumentation Review</h2>
             <img src="assets/code-coverage-mechanism1.png" alt="code coverage mechanism 1"></img>
           </section>
@@ -333,11 +303,6 @@ require(["path/script.js"], function() {
           <section>
             <h2>Solution</h2>
             <img src="assets/solution-mechanism.png" alt="solution mechanism"></img>
-          </section>
-
-          <section>
-            <h2>API structure</h2>
-            <img src="assets/api-structure.png" alt="api structure"></img>
           </section>
 
           <section>
@@ -386,10 +351,6 @@ XMLHttpRequest.prototype.open = function(method, url) {
           <section>
             <h3>New feature has landed in Firefox OS</h3>
             <img src="assets/ffos-email-correct.png" alt="ffos email correct">
-          </section>
-
-          <section>
-            <p>Doesn't break original behavior even works fine in such complicated system</p>
           </section>
 
           <section>
