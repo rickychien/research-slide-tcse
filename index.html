@@ -44,21 +44,6 @@
         </section>
 
         <section>
-          <h2>Outline</h2>
-          <br>
-          <ol>
-            <li>Test coverage</li>
-            <li>Web application</li>
-            <li>Background</li>
-            <li>Test coverage with dynamic lazy loading</li>
-            <li>Analysis</li>
-            <li>Method</li>
-            <li>Achievement</li>
-            <li>Conclusion</li>
-          </ol>
-        </section>
-
-        <section>
           <section>
             <h2>Test coverage</h2>
           </section>
@@ -91,38 +76,18 @@
           </section>
 
           <section>
-            <h2>To build a web application</h2>
-            <ul>
-              <li class="fragment"><p>It's different with traditional website</p></li>
-              <li class="fragment"><p>Developers intent to distribute JavaScript files to modules</p></li>
-              <li class="fragment"><p>Web page is composed by modules or third-party libraries</p></li>
-              <br>
-              <p class="fragment" style="color: #99CCFF;">Web application have to download source code from network</p>
-            </ul>
-            <div class="fragment">
-              <img src="assets/browser-network.png" alt="browser network">
-            </div>
+            <h2>Web application depend on network</h2>
+            <br>
+            <img src="assets/browser-network.png" alt="browser network">
           </section>
 
           <section>
-            <h2>New issues</h2>
+            <h2>Dynamic lazy loading</h2>
             <ul>
-              <li class="fragment"><p>Too much requests will slow network down</p></li>
-              <li class="fragment"><p>User don't use all website functionalities every times</p></li>
-              <li class="fragment"><p>Huge JS libraries may block website loading</p></li>
+              <li class="fragment"><p>Using javascript to load javascript in run-time</p></li>
+              <li class="fragment"><p>Add conditions to determine when will need to load javascript</p></li>
             </ul>
-            <br><br>
-            <h3 class="fragment" style="color: #ff4629;">Solutions by dynamic loading</h3>
-          </section>
-
-          <section>
-            <h2>Dynamic loading</h2>
-            <ul>
-              <li><p>Also known as "Lazy loading"</p></li>
-              <li><p>Using javascript to load javascript in run-time</p></li>
-              <li><p>Add conditions to determine when will need to load javascript</p></li>
-            </ul>
-            <img src="assets/dynamic-loading.png" alt="dynamic loading">
+            <img class="fragment" src="assets/dynamic-loading.png" alt="dynamic loading">
           </section>
         </section>
 
@@ -137,11 +102,6 @@
           </section>
 
           <section>
-            <h2>Coverage mechanism</h2>
-            <p>Browser instrumentation / Server instrumentation</p>
-          </section>
-
-          <section>
             <h2>Instrumentation</h2>
             <img src="assets/before-instrument.png" alt="before instrument"></img>
             <p><small>Before</small></p>
@@ -151,35 +111,8 @@
 
           <section>
             <h2>Browser instrumentation</h2>
-            <img src="assets/code-coverage-mechanism1.png" alt="code coverage mechanism 1"></img>
-          </section>
-
-          <section>
-            <h2>Browser instrumentation</h2>
             <img src="assets/mechanism1-client-server.png" alt=""></img>
             <p>Code instrumenting on browser</p>
-          </section>
-
-          <section>
-            <h2>Browser instrumentation</h2>
-            <img class="fragment" src="assets/blanket.png"></img>
-            <ul>
-              <li class="fragment"><p>Pros:</p></li>
-              <ul>
-                <li class="fragment"><p>Quite friendly to novice developers</p></li>
-                <li class="fragment"><p>Pretty easy to integrate with various environments</p></li>
-              </ul>
-              <li class="fragment"><p>Cons:</p></li>
-              <ul>
-                <li class="fragment"><p>Not support to dynamic loading coverage</p></li>
-              </ul>
-            </ul>
-          </section>
-
-          <section>
-            <h2>Server instrumentation</h2>
-            <img src="assets/code-coverage-mechanism2.png" alt="code coverage mechanism 2"></img>
-            <p>Need to use customized coverage server</p>
           </section>
 
           <section>
@@ -187,39 +120,17 @@
             <img src="assets/mechanism2-client-server.png" alt="browser test runner"></img>
             <p>Code instrumenting on coverage server</p>
           </section>
-
-          <section>
-            <h2>Server instrumentation</h2>
-            <img class="fragment" src="assets/jscover.png"></img>
-            <ul>
-              <li class="fragment"><p>Pros:</p></li>
-              <ul>
-                <li class="fragment"><p>The full coverage support including dynamic loading script</p></li>
-              </ul>
-              <li class="fragment"><p>Cons:</p></li>
-              <ul>
-                <li class="fragment"><p>Inconvenient to install and configure (ex: need Java)</p></li>
-                <li class="fragment"><p>Hard to integrate instrumentation server with other server</p></li>
-              </ul>
-            </ul>
-          </section>
-
-          <section>
-            <h2>Our goal is to improve<br>browser instrumentation</h2>
-            <img src="assets/blanket.png"></img>
-            <p>Make it possible to cover dynamic lazy loading scripts</p>
-          </section>
         </section>
 
         <section>
           <section>
-            <h2>Test coverage with dynamic lazy loading</h2>
+            <h2>Test coverage with<br>dynamic lazy loading</h2>
           </section>
 
           <section>
             <h2>Zero coverage</h2>
             <div>
-              <p>Firefox OS email app should be covered 21 modules, but actually only one</p>
+              <p>Firefox OS email app should be covered 21 modules</p>
               <img src="assets/ffos-email-wrong.png" alt="ffox email wrong">
             </div>
           </section>
@@ -227,7 +138,6 @@
           <section>
             <h2>Zero coverage</h2>
             <div>
-              <p>Prevalent web dynamic loading scheme</p>
               <img src="assets/lazyload-sample.png" alt="lazyload sample">
               <a href="http://rickychien.github.io/lazyload-sample/old/">Lazyload-sample</a>
             </div>
@@ -237,21 +147,7 @@
         <section>
           <section>
             <h2>Analysis</h2>
-            <p>Analyze web script loading approachs</p>
-          </section>
-
-          <section>
-            <h2>Script Loading - HTML Script</h2>
-            <br>
-            <pre><code data-trim contenteditable>
-&lt;script src=&quot;path/script.js&quot;&gt;&lt;/script&gt;
-            </code></pre>
-            <pre><code data-trim contenteditable>
-&lt;script src=&quot;path/script.js&quot; async&gt;&lt;/script&gt;
-            </code></pre>
-            <pre><code data-trim contenteditable>
-&lt;script src=&quot;path/script.js&quot; defer&gt;&lt;/script&gt;
-            </code></pre>
+            <p>Analyze web dynamic lazy loading approachs</p>
           </section>
 
           <section>
