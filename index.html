@@ -146,15 +146,22 @@
           </section>
 
           <section>
+            <h2>Script Loading - HTML Script</h2>
+            <br>
+            <pre><code data-trim contenteditable>
+&lt;script src=&quot;path-to/script.js&quot;&gt;&lt;/script&gt;
+            </code></pre>
+          </section>
+
+          <section>
             <h2>Script Loading - XHR (Ajax)</h2>
             <br>
             <pre><code data-trim contenteditable>
 var xhr = new XMLHttpRequest();
-xhr.onload = function (responseScript) {
-  // Execute response script
-  eval(responseScript);
+xhr.open('GET', 'path-to/script.js'); // Assign script url
+xhr.onload = function (script) {
+  eval(script); // Execute script
 };
-xhr.open('GET', 'URL');
 xhr.send();
             </code></pre>
           </section>
@@ -163,7 +170,7 @@ xhr.send();
             <h2>Script Loading - Document.write</h2>
             <br>
             <pre><code data-trim contenteditable>
-document.write('<script src="path/script.js"></script>');
+document.write('<script src="path-to/script.js"></script>');
             </code></pre>
           </section>
 
@@ -173,7 +180,7 @@ document.write('<script src="path/script.js"></script>');
             <p>appendChild / insertBefore / replaceChild</p>
             <pre><code data-trim contenteditable>
 var script = document.createElement("script");
-script.src = url;
+script.src = url; // Assign script url
 
 document.head.appendChild(script);
 parentNode.insertBefore(script, node);
@@ -186,8 +193,8 @@ parentNode.replaceChild(script, oldNode);
             <br>
             <p>Famous module loader library such as RequireJS using syntax :</p>
             <pre><code data-trim contenteditable>
-require(["path/script.js"], function() {
-  // This function is called after path/script.js has loaded.
+require(["path-to/script.js"], function() {
+  // This function is called after path-to/script.js has loaded.
 });
             </code></pre>
           </section>
