@@ -46,6 +46,9 @@
         <section>
           <section>
             <h2>Test coverage</h2>
+            <aside class="notes">
+              首先是Test Coverage
+            </aside>
           </section>
 
           <section>
@@ -56,12 +59,21 @@
               <img src="assets/coverage-report.png" alt="coverage report">
               <small><p>Blanket.js - JavaScript test coverage tool</p></small>
             </div>
+            <aside class="notes">
+              為什麼我們需要Test Coverage？
+              一般的programmer會寫測試來確保程式的品質，
+              不過寫好了測試後卻無法得知寫的測試是否有完整的涵蓋系統，這時programmer可以藉由
+              coverage tool來取得測試覆蓋的統計資料，進一步了解撰寫的測試涵蓋狀況。
+            </aside>
           </section>
         </section>
 
         <section>
           <section>
             <h2>Web application</h2>
+            <aside class="notes">
+              接下來會開始介紹Web application
+            </aside>
           </section>
 
           <section>
@@ -73,23 +85,42 @@
             <div class="fragment">
               <img src="assets/gmail.png" alt="gmail" style="width: 680px; height: 400px;">
             </div>
+            <aside class="notes">
+              Web is changing。
+              我們知道現今的Web已經變得越來越複雜。
+              Browser端功能越來越強大，可以幫助Server分擔許多複雜的任務。
+              Gmail就是一個最著名的例子，有用過的人都知道，在使用Gmail時不像在瀏覽一般網頁，而更像是在使用一般桌面應用程式。
+              也因此，我們將它稱之為Web應用程式。
+            </aside>
           </section>
 
           <section>
             <h2>Web application depends on network</h2>
             <br>
             <img src="assets/browser-network.png" alt="browser network">
+            <aside class="notes">
+              另外一方面，Web應用程式與一般桌面應用程式不同的地方在於，他非常依賴網路，甚至連背後的原始碼模組也都是經由網路下載的。
+            </aside>
           </section>
 
           <section>
             <h2>Dynamic lazy loading</h2>
             <img class="fragment" src="assets/dynamic-loading.png" alt="dynamic lazy loading">
+            <aside class="notes">
+              為了要提升網路速度，Dynamic lazy loading的概念被提了出來。中文稱為動態載入。
+              左方圖中，一般JavaScript原始碼都是使用HTML script語法載入。
+              不過我們其實可以透過JavaScript的邏輯來判斷在適當的時機載入另一份JavaScript，以達成動態載入。
+              如此一來可以有效降低網路流量，提升使用者體驗品質。
+            </aside>
           </section>
         </section>
 
         <section>
           <section>
             <h2>Background</h2>
+            <aside class="notes">
+              接下來是與本研究相關的Background
+            </aside>
           </section>
 
           <section>
@@ -98,30 +129,54 @@
             <p><small>Before</small></p>
             <img src="assets/after-instrument.png" alt="after instrument"></img>
             <p><small>After</small></p>
+            <aside class="notes">
+              首先，code coverage統計程式碼覆蓋率的背後原理主要是透過source instrumentation，我們簡稱instrumentation。
+              instrumentation是一種在不影響原程式行為的狀況下對原始碼進行增修，然後達成記錄程式走訪行為的目的。
+              直接看範例圖，原本的程式碼如上圖，經過instrumentation之後，下圖的程式碼新增了額外的變數，用來記錄原始碼的走訪過程。
+            </aside>
+          </section>
+
+          <section>
+            <h2>Coverage mechanism in web</h2>
+            <p>Browser instrumentation / Server instrumentation</p>
+            <aside class="notes">
+              接下來讓我們分析一下在Web上的code coverage實作方式，主要可以分為兩種方式 - 
+              Browser instrumentation 與 Server instrumentation。
+            </aside>
           </section>
 
           <section>
             <h2>Browser instrumentation</h2>
             <img src="assets/mechanism1-client-server.png" alt=""></img>
-            <p>Code instrumentation on browser</p>
+            <aside class="notes">
+              Browser instrumentation即為在瀏覽器上做instrument。如圖中所見，一般測試環境的背後須啟動一個server，
+            </aside>
           </section>
 
           <section>
             <h2>Server instrumentation</h2>
             <img src="assets/mechanism2-client-server.png" alt="browser test runner"></img>
-            <p>Code instrumentation on coverage server</p>
+            <aside class="notes">
+              
+            </aside>
           </section>
 
           <section>
             <h2>If situtaion is more complicated</h2>
             <p>Sometimes we need to interact with a real server</p>
             <img src="assets/instrumentation-server-problem.png"></img>
+            <aside class="notes">
+              
+            </aside>
           </section>
         </section>
 
         <section>
           <section>
             <h2>Issue - Zero coverage</h2>
+            <aside class="notes">
+              
+            </aside>
           </section>
 
           <section>
@@ -130,6 +185,9 @@
               <p>Firefox OS email app should be covered 21 modules</p>
               <img src="assets/ffos-email-wrong.png" alt="ffox email wrong">
             </div>
+            <aside class="notes">
+              
+            </aside>
           </section>
 
           <section>
@@ -138,6 +196,9 @@
               <img src="assets/lazyload-sample.png" alt="lazyload sample">
               <a href="http://rickychien.github.io/lazyload-sample/old/">Lazyload-sample</a>
             </div>
+            <aside class="notes">
+              
+            </aside>
           </section>
         </section>
 
@@ -145,6 +206,9 @@
           <section>
             <h2>Analysis</h2>
             <p>Analyze web dynamic lazy loading approachs</p>
+            <aside class="notes">
+              
+            </aside>
           </section>
 
           <section>
@@ -153,6 +217,9 @@
             <pre><code data-trim contenteditable>
 &lt;script src=&quot;path-to/script.js&quot;&gt;&lt;/script&gt;
             </code></pre>
+            <aside class="notes">
+              
+            </aside>
           </section>
 
           <section>
@@ -166,6 +233,9 @@ xhr.onload = function (script) {
 };
 xhr.send();
             </code></pre>
+            <aside class="notes">
+              
+            </aside>
           </section>
 
           <section>
@@ -174,6 +244,9 @@ xhr.send();
             <pre><code data-trim contenteditable>
 document.write('<script src="path-to/script.js"></script>');
             </code></pre>
+            <aside class="notes">
+              
+            </aside>
           </section>
 
           <section>
@@ -188,6 +261,9 @@ document.head.appendChild(script);
 parentNode.insertBefore(script, node);
 parentNode.replaceChild(script, oldNode);
             </code></pre>
+            <aside class="notes">
+              
+            </aside>
           </section>
 
           <section>
@@ -199,27 +275,42 @@ require(["path-to/script.js"], function() {
   // This function is called after path-to/script.js has loaded.
 });
             </code></pre>
+            <aside class="notes">
+              
+            </aside>
           </section>
 
           <section>
             <h2>Summary</h2>
             <img style="width: 80%; height: 80%" src="assets/script-loading-analysis.png" alt="script loading analysis"></img>
           </section>
+            <aside class="notes">
+              
+            </aside>
         </section>
 
         <section>
           <section>
             <h2>Method</h2>
+            <aside class="notes">
+              
+            </aside>
           </section>
 
           <section>
             <h2>Browser Instrumentation Review</h2>
             <img src="assets/code-coverage-mechanism1.png" alt="code coverage mechanism 1"></img>
+            <aside class="notes">
+              
+            </aside>
           </section>
 
           <section>
             <h2>Solution</h2>
             <img src="assets/solution-mechanism.png" alt="solution mechanism"></img>
+            <aside class="notes">
+              
+            </aside>
           </section>
 
           <section>
@@ -234,6 +325,9 @@ Element.prototype.appendChild = function(newElement) {
     return originalAppendChild.apply(this, args); // invoke native method
 };
             </code></pre>
+            <aside class="notes">
+              
+            </aside>
           </section>
 
           <section>
@@ -248,6 +342,9 @@ XMLHttpRequest.prototype.open = function(method, url) {
   return originalXHROpen.apply(this, args); // invoke native method
 };
             </code></pre>
+            <aside class="notes">
+              
+            </aside>
           </section>
         </section>
 
@@ -263,11 +360,17 @@ XMLHttpRequest.prototype.open = function(method, url) {
               <li><a href="http://rickychien.github.io/lazyload-sample/old/">Without support lazyload</a></li>
               <li><a href="http://rickychien.github.io/lazyload-sample/new/">With support lazyload</a></li>
             </ul>
+            <aside class="notes">
+              
+            </aside>
           </section>
 
           <section>
             <h3>New feature has landed in Firefox OS</h3>
             <img src="assets/ffos-email-correct.png" alt="ffos email correct">
+            <aside class="notes">
+              
+            </aside>
           </section>
         </section>
 
@@ -281,6 +384,9 @@ XMLHttpRequest.prototype.open = function(method, url) {
             <li class="fragment"><p>Solution is safe that even integrated into FFOS testing framework</p></li>
             <li class="fragment"><p>New feature will land into Blanket.js</p></li>
           </ul>
+          <aside class="notes">
+            
+          </aside>
         </section>
 
         <section>
