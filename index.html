@@ -446,14 +446,20 @@ XMLHttpRequest.prototype.open = function(method, url) {
           <h2>Conclusion</h2>
           <ul>
             <li class="fragment"><p>We demonstrated the zero coverage issue</p></li>
-            <li class="fragment"><p>Analyzed code instrumentation mechanism and dynamic lazy loading schemes</p></li>
+            <li class="fragment"><p>Analyzed tool中source instrumentation mechanism and dynamic lazy loading schemes</p></li>
             <li class="fragment"><p>Proposed a solution to overwrite native Web APIs to addressing zero coverage issue</p></li>
             <li class="fragment"><p>Experiment was successful so that can cover dynamic lazy loading scripts</p></li>
             <li class="fragment"><p>Solution is safe that even integrated into FFOS testing framework</p></li>
             <li class="fragment"><p>New feature will land into Blanket.js</p></li>
           </ul>
           <aside class="notes">
-            
+            那最後就是本研究的結論。
+            研究中展示了zero coverage問題。
+            然後我們分析了coverage tool中source instrumentation與dynamic lazy loading的的方式。
+            接下來提出一個overwrite native Web APIs的方式來解決zero coverage問題。
+            並且驗證了這個解決方法是可行的，coverage report在加入了研究方法後就能夠涵蓋到動態載入的原始碼。
+            評估過程中，我們將研究方法導入FFOS的testing framework上，驗證了本研究方法的安全性，並不會影響原始程式行為。
+            那這個新的研究方法也已經proposed給blanket.js，期望未來能夠整合成功，如此一來可以幫助到世界各地的開發者。
           </aside>
         </section>
 
