@@ -345,11 +345,14 @@ require(["path-to/script.js"], function() {
           </section>
 
           <section>
-            <h2>Browser Instrumentation Review</h2>
+            <h2>Browser Instrumentation Process</h2>
             <img src="assets/code-coverage-mechanism1.png" alt="code coverage mechanism 1"></img>
             <aside class="notes">
               首先，我們先分析一下browser instrumentation的執行流程。
-              
+              一開始，我們會在HTML上定義好需載入的script元素，這包括原始碼與測試程式碼，
+              接下來coverage tool會在HTML載入完成後啟動，搜尋HTML上的script並進行instrumentation，
+              並執行被instrumented script，然後告訴testing tool開始跑測試，最後輸出coverage report。
+              不過在跑測試過程中，可能會發生dynamic lazy loading，所以使得這部分的模組檔案出現zero coverage，使得report不正確。
             </aside>
           </section>
 
@@ -357,7 +360,9 @@ require(["path-to/script.js"], function() {
             <h2>Solution</h2>
             <img src="assets/solution-mechanism.png" alt="solution mechanism"></img>
             <aside class="notes">
-              
+              那我們的解決方法是，在要執行測試之前，先overwrite browser的動態載入Web API，也就是XHR與DOM modification API。
+              在下載script後直接執行source instrumentation並且執行這個instrumendted script，
+              這樣子在接下來的測試中，當有動態載入發生時，下載的程式碼就能夠被立即instrument，使得coverage tool可以正確分析走訪行為。
             </aside>
           </section>
 
@@ -374,7 +379,13 @@ Element.prototype.appendChild = function(newElement) {
 };
             </code></pre>
             <aside class="notes">
-              
+              就Overwrite DOM modification API裏面的appendChild為例子來說。
+              首先，我們必須先了解Browser Web API的prototype繼承結構，
+              然後找到了Element.prototype.appendChild這個function來進行overwrite。
+              JavaScript可以透過像C++中的function pointer形式將function存在變數中，
+              我們透過這個方法先將Element.prototype.appendChild暫存起來，然後直接overwrite成我們的邏輯。
+              在我們的邏輯中就會將下載來的script進行source instrumentation，依照情況invoke原始appendChild function call。
+              這種overwirte native API在開發中很罕見，所以能安全的並不影響原始程式行為需要做些驗證。
             </aside>
           </section>
 
@@ -391,7 +402,7 @@ XMLHttpRequest.prototype.open = function(method, url) {
 };
             </code></pre>
             <aside class="notes">
-              
+              那XHR API的overwrite方式也如同上面的方式，所以這邊就不再多做解釋了。
             </aside>
           </section>
         </section>
@@ -399,6 +410,9 @@ XMLHttpRequest.prototype.open = function(method, url) {
         <section>
           <section>
             <h2>Achievement</h2>
+            <aside class="notes">
+              現在我們就來展示一下研究的成果
+            </aside>
           </section>
 
           <section>
@@ -409,7 +423,9 @@ XMLHttpRequest.prototype.open = function(method, url) {
               <li><a href="http://rickychien.github.io/lazyload-sample/new/">With support lazyload</a></li>
             </ul>
             <aside class="notes">
-              
+              我們先來看一下前面提到的測試網站結果。
+              可以發現在加入的本研究方法後，模組A-F幾乎都已經被coverage tool涵蓋，
+              而且overwrite Web API的方法也沒有影響原始網站的動態載入行為，並且成功通過unit tests。
             </aside>
           </section>
 
@@ -417,7 +433,11 @@ XMLHttpRequest.prototype.open = function(method, url) {
             <h3>New feature has landed in Firefox OS</h3>
             <img src="assets/ffos-email-correct.png" alt="ffos email correct">
             <aside class="notes">
-              
+              不過之前的範例規模太小，我們應該將使用真實的Web application來驗證結果，
+              所以將研究方法套用到Firefox OS的unit testing framework上，如圖。
+              我們一樣選用先前的email app當例子，在加入研究方法後，所有21個模組檔案都正常的coverage tool涵蓋，
+              經過檢驗後coverage結果也是正確的。
+              並且在套用到其他不同的Firefox OS 內建app上結果也正確，並且程式都運作良好，沒有影響到原始程式行為。
             </aside>
           </section>
         </section>
