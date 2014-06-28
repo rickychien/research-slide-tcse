@@ -149,7 +149,9 @@
             <h2>Browser instrumentation</h2>
             <img src="assets/mechanism1-client-server.png" alt=""></img>
             <aside class="notes">
-              Browser instrumentation即為在瀏覽器上做instrument。如圖中所見，一般測試環境的背後須啟動一個server，
+              Browser instrumentation即為在瀏覽器上做instrument。如圖，在此架構中，測試與source instrumtation都是執行在瀏覽器端，一般測試環境背後須啟動server用來回應前端request，
+              然後由瀏覽器進行source instrumentation。
+              在使用非動態載入的原始碼可以正常的被instrument，不過缺點是他無法偵測dynamic lazy loading動態載入的原始碼。
             </aside>
           </section>
 
@@ -157,7 +159,9 @@
             <h2>Server instrumentation</h2>
             <img src="assets/mechanism2-client-server.png" alt="browser test runner"></img>
             <aside class="notes">
-              
+              Server instrumentation則將instrument移至額外的instrumentation server來做，
+              這樣可以讓前端瀏覽器在完全不知情的情況下下載已經被instrumted後的原始碼，然後就可以順利的分析程式碼覆蓋。
+              而且前端不論透過非動態或動態載入都可以取得instrumented版本的原始碼進行覆蓋率分析。
             </aside>
           </section>
 
@@ -166,7 +170,11 @@
             <p>Sometimes we need to interact with a real server</p>
             <img src="assets/instrumentation-server-problem.png"></img>
             <aside class="notes">
-              
+              看起來server instrumentation似乎很完美，但有時測試環境情況會更加複雜。
+              例如：有時候我們會與後端的web server做互動，需要web server回傳的真實的資料來做測試。
+              這時後，單純為了code coverage而多加入了一個instrumentation server會使得整合發生困難。
+              不過若使用Browser instrumentation的方式時可以避開這種問題，而且在安裝與設定上，
+              Browser instrumentation的方式相較起來也會比較容易。
             </aside>
           </section>
         </section>
@@ -175,7 +183,9 @@
           <section>
             <h2>Issue - Zero coverage</h2>
             <aside class="notes">
-              
+              剛剛我們已經說明了在Browser instrumentation方式上會有無法覆蓋動態載入原始碼的問題。
+              本研究將這個問題稱之為Zero Coverage。
+              然後接下來用兩個實際的範例來展示一下什麼是Zero coverage。
             </aside>
           </section>
 
@@ -186,7 +196,11 @@
               <img src="assets/ffos-email-wrong.png" alt="ffox email wrong">
             </div>
             <aside class="notes">
-              
+              Case 1，當初我在幫Mozilla開發Firefox OS時，我在他們的unit test framework上導入了code coverage。
+              這套code coverage tool就是使用browser instrumentation。
+              在導入完成後，竟然發現coverage report不正確的問題。FFOS內建的email app共分了21個模組，
+              而且每個模組都有撰寫unit test，不過在結果圖中我們看到只有一個模組檔案被正確的覆蓋，而且coverage非常低。
+              在我觀察之下，這些無法覆蓋的模組檔案幾乎都是與動態載入有關。
             </aside>
           </section>
 
@@ -197,7 +211,26 @@
               <a href="http://rickychien.github.io/lazyload-sample/old/">Lazyload-sample</a>
             </div>
             <aside class="notes">
-              
+              所以在Case 2中，我自己撰寫了一個簡易的測試網站，用了各種不同的動態載入來載入原始碼。
+              如圖中看到的，這邊有6個module A-F，module A使用一般HTML script方式載入，module B使用XHR的動態載入方式載入，
+              module C使用appendChild的動態載入方式載入，以此類推，
+              最後module F是利用JavaScript知名的動態載入library - requireJS載入。
+              那我們直接來看一下測試網頁的結果。(點開Link)
+              好，由於我為了測試網站寫了測試來產生測試覆蓋結果，首先看到的是unit test都正常的passed，
+              而下面則是我們要看的coverage report。
+              在結果上我們只看到一個module A被覆蓋，而module B-F完全沒有任何覆蓋資訊。
+              所以，本研究將Case 1和Case 2這種情形統稱為zero coverage問題。
+            </aside>
+          </section>
+
+          <section>
+            <h2>Improve browser instrumentation</h2>
+            <img src="assets/blanket.png"></img>
+            <p>Make it possible to cover dynamic lazy loading scripts</p>
+            <aside class="notes">
+              那本研究重點就是在於改進使用browser insturmentation方式的zero coverage問題。
+              在JavaScript coverage tools中，較著名且是使用browser insturmentation的就是blanket.js。
+              我們想要直接改進blanket.js，使得dynamic lazy loading可以被偵測。
             </aside>
           </section>
         </section>
@@ -205,9 +238,9 @@
         <section>
           <section>
             <h2>Analysis</h2>
-            <p>Analyze web dynamic lazy loading approachs</p>
+            <p>Analyze web loading approachs</p>
             <aside class="notes">
-              
+              首先我們先來分析web上各種載入方式，找出方法來偵測動態載入的code coverage。
             </aside>
           </section>
 
@@ -218,7 +251,8 @@
 &lt;script src=&quot;path-to/script.js&quot;&gt;&lt;/script&gt;
             </code></pre>
             <aside class="notes">
-              
+              HTML script方法並非動態載入。
+              一般JavaScript載入方式都會透過這種在HTML加入script tag的方式來載入原始碼，
             </aside>
           </section>
 
@@ -234,7 +268,9 @@ xhr.onload = function (script) {
 xhr.send();
             </code></pre>
             <aside class="notes">
-              
+              接下來的方式皆為動態載入方法。
+              首先，XHR是browser提供的Web API可以讓你透過JavaScript來下載原始碼，他也是Ajax技術的核心。
+              透過XMLHttpRequest物件並且指定要下載的路徑，接下來就能在取得原始碼後執行原始碼，達到動態載入。
             </aside>
           </section>
 
@@ -245,7 +281,9 @@ xhr.send();
 document.write('<script src="path-to/script.js"></script>');
             </code></pre>
             <aside class="notes">
-              
+              document.write一樣是browser提供的API，它能夠重新改寫原始的HTML，
+              像是圖中重新寫入script tag來動態下載原始碼。
+              不過此種方式有performance與security問題，目前較不推薦使用。
             </aside>
           </section>
 
@@ -262,7 +300,10 @@ parentNode.insertBefore(script, node);
 parentNode.replaceChild(script, oldNode);
             </code></pre>
             <aside class="notes">
-              
+              這邊所說的DOM modification API一樣是Web API。
+              主要有appendChild, insertBefore, replaceChild這三種能對於DOM做新增元素的方法。
+              我們可以動態的新建一個script元素，然後指定其source路徑，
+              最後使用DOM modification API新增到HTML上面來達成下載。
             </aside>
           </section>
 
@@ -276,24 +317,30 @@ require(["path-to/script.js"], function() {
 });
             </code></pre>
             <aside class="notes">
-              
+              JavaScript有許多不同的module loader libraries。像是requireJS就是滿著名的library。
+              這種library會使用固定形式的API來做動態載入，像圖中會定義一個require function call來載入原始碼。
+              我們將這種方式稱為function wrapping。
             </aside>
           </section>
 
           <section>
             <h2>Summary</h2>
             <img style="width: 80%; height: 80%" src="assets/script-loading-analysis.png" alt="script loading analysis"></img>
-          </section>
             <aside class="notes">
-              
+              我們來總結一下這些載入方法。
+              圖中顯示了五種不同的動態載入方式，HTML script為非動態載入方式。
+              而document.write剛剛提到有bad performance與security問題，目前非常少人使用。
+              那下一個function wrapping方式其背後的實作原理大部份都是透過DOM modification API實作。
+              所以我們如果要偵測動態載入方式，那只需要針對XHR與DOM modification API這兩種方式下手。
             </aside>
+          </section>
         </section>
 
         <section>
           <section>
             <h2>Method</h2>
             <aside class="notes">
-              
+              根據之前的分析結果，我們提出了解決zero coverage的方法。
             </aside>
           </section>
 
@@ -301,6 +348,7 @@ require(["path-to/script.js"], function() {
             <h2>Browser Instrumentation Review</h2>
             <img src="assets/code-coverage-mechanism1.png" alt="code coverage mechanism 1"></img>
             <aside class="notes">
+              首先，我們先分析一下browser instrumentation的執行流程。
               
             </aside>
           </section>
