@@ -188,36 +188,17 @@
           </section>
 
           <section>
-            <h2>Case 1</h2>
+            <h2>Case</h2>
             <div>
               <p>Firefox OS email app should be covered 21 modules</p>
               <img src="assets/ffos-email-wrong.png" alt="ffox email wrong">
             </div>
             <aside class="notes">
-              Case 1，當初我在幫Mozilla開發Firefox OS時，我在他們的unit test framework上導入了code coverage。
-              這套code coverage tool就是使用browser instrumentation。
-              在導入完成後，竟然發現coverage report不正確的問題。FFOS內建的email app共分了21個模組，
+              去年我幫Firefox OS的unit testing framework導入了code coverage。
+              就剛好是使用了browser instrumentation的方式。
+              在導入完成後，竟然發現coverage report不正確。FFOS內建的email app共分了21個模組，
               而且每個模組都有撰寫unit test，不過在結果圖中我們看到只有一個模組檔案被正確的覆蓋，而且coverage非常低。
               在我觀察之下，這些無法覆蓋的模組檔案幾乎都是與動態載入有關。
-            </aside>
-          </section>
-
-          <section>
-            <h2>Case 2</h2>
-            <div>
-              <img src="assets/lazyload-sample.png" alt="lazyload sample">
-              <a href="http://rickychien.github.io/lazyload-sample/old/">Lazyload-sample</a>
-            </div>
-            <aside class="notes">
-              所以在Case 2中，我自己撰寫了一個簡易的測試網站，用了各種不同的動態載入來載入原始碼。
-              如圖中看到的，這邊有6個module A-F，module A使用一般HTML script方式載入，module B使用XHR的動態載入方式載入，
-              module C使用appendChild的動態載入方式載入，以此類推，
-              最後module F是利用JavaScript知名的動態載入library - requireJS載入。
-              那我們直接來看一下測試網頁的結果。(點開Link)
-              好，由於我為了測試網站寫了測試來產生測試覆蓋結果，首先看到的是unit test都正常的passed，
-              而下面則是我們要看的coverage report。
-              在結果上我們只看到一個module A被覆蓋，而module B-F完全沒有任何覆蓋資訊。
-              所以，本研究將Case 1和Case 2這種情形統稱為zero coverage問題。
             </aside>
           </section>
 
@@ -226,9 +207,9 @@
             <img src="assets/blanket.png"></img>
             <p>Make it possible to cover dynamic lazy loading scripts</p>
             <aside class="notes">
-              那本研究重點就是在於改進使用browser insturmentation方式的zero coverage問題。
-              在JavaScript coverage tools中，較著名且是使用browser insturmentation的就是blanket.js。
-              我們想要直接改進blanket.js，使得dynamic lazy loading可以被偵測。
+              那本研究目的就是在於改進使用browser insturmentation，修正zero coverage問題。
+              在JavaScript coverage tools中，較著名且是使用browser insturmentation的就是blanket。
+              所以我們想要直接改進blanket，使得dynamic lazy loading可以被偵測。
             </aside>
           </section>
         </section>
@@ -484,7 +465,7 @@ XMLHttpRequest.prototype.open = function(method, url) {
         center: true,
 
         theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
-        transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+        transition: Reveal.getQueryHash().transition || 'fade', // default/cube/page/concave/zoom/linear/fade/none
 
         // Parallax scrolling
         // parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
