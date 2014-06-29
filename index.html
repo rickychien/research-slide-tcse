@@ -180,6 +180,7 @@
         <section>
           <section>
             <h2>Issue - Zero coverage</h2>
+            <p>In browser instrumentation</p>
             <aside class="notes">
               剛剛我們已經說明了在Browser instrumentation方式上會有無法覆蓋動態載入原始碼的問題。
               本研究將這個問題稱之為Zero Coverage。
@@ -464,7 +465,7 @@ XMLHttpRequest.prototype.open = function(method, url) {
         center: true,
 
         theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
-        transition: Reveal.getQueryHash().transition || 'fade', // default/cube/page/concave/zoom/linear/fade/none
+        transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
 
         // Parallax scrolling
         // parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
